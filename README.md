@@ -56,6 +56,13 @@ julia> PDGdb.connect(path2file)
 
 The database is available from the [API page](https://pdg.lbl.gov/2023/api/index.html).
 
+One can also do,
+```julia
+julia> db_url = "https://pdg.lbl.gov/2023/api/pdg-2023-v0.0.5.sqlite"
+julia> tmp_dir = mktempdir()
+julia> const db_path = joinpath(tmp_dir, "pdg-2023-v0.0.5.sqlite")
+julia> download(db_url, joinpath(tmp_dir, "pdg-2023-v0.0.5.sqlite"))
+```
 
 ## Basic Usage
 

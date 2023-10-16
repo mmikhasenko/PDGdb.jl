@@ -106,3 +106,15 @@ The line,
 julia> properties(pdg("pi(1800)+")) |> decays
 ```
 gives the data frame of all decay channels measured.
+
+## Related Packages
+
+1. **PDG Python API** [GitHub Repository](https://github.com/particledatagroup/api)  
+   The PDG Python API package provides programmatic access to data published by the Particle Data Group in the Review of Particle Physics.
+   Comprehensive documentation for the PDG API can be accessed [here](https://pdgapi.lbl.gov/doc). 
+
+2. **Corpuscles.jl**  [GitHub Repository](https://github.com/JuliaPhysics/Corpuscles.jl)  
+   Corpuscles.jl is a Julia package that offers easy access to particle properties and identification codes defined by the Particle Data Group (PDG) collaboration. The package uses cleaned CSV versions of the PDG data, which are provided by the Scikit-HEP project. This data is part of the Particle Python module, which inspired the creation of Corpuscles.jl for the Julia Language. Although Corpuscles.jl is not as feature-rich as the Particle Python module, it continuously adds functionality as required. Contributions in the form of issues or pull requests are welcome for bug reports or suggestions.
+
+3. **Particle (Python)** [GitHub Repository](https://github.com/scikit-hep/particle)  
+   The Particle package offers a pythonic interface to the PDG particle data tables and particle identification codes. The package provides enhanced particle information and additional features. The PDGID class within the package facilitates queries on PDG IDs and also supports free-standing functions that expand upon the HepPID/HepPDT C++ interface. The Particle class encapsulates the data from the PDG particle data tables and offers an object-oriented approach, along with robust search and lookup utilities.

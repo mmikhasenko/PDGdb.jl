@@ -1,0 +1,9 @@
+name = "PDGdb"
+uuid = "ef90c845-d849-4a8c-ba37-39014cc33f62"
+authors = ["Mikhail Mikhasenko <mikhail.mikhasenko@cern.ch>"]
+version = "0.1.0"
+
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
+SQLite = "0aa819cd-b072-5ff4-a722-6bc24af294d9"

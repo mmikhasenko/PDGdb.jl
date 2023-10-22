@@ -59,6 +59,10 @@ function connect(path2)
         for dgb in groupby(pdgdoc, [:table_name, :column_name])]
     # 
     global unique_particles = pdgparticle[
+        # entry_type != "W" # was
+        # entry_type != "A" # as known as
+        # entry_type != "S" # out-of-date
+        #  ==> entry_type == "P"
         (pdgparticle.entry_type.=="P").&&(pdgparticle.charge_type.!="G"),
         :]
     global all_particles_names = unique_particles.name

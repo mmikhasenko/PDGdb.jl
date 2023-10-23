@@ -1,4 +1,5 @@
 using Test
+using Downloads
 using PDGdb
 using PDGdb.DataFrames
 using PDGdb.Measurements
@@ -7,7 +8,7 @@ using PDGdb.Measurements
 db_url = "https://pdg.lbl.gov/2023/api/pdg-2023-v0.0.5.sqlite"
 tmp_dir = mktempdir()
 const db_path = joinpath(tmp_dir, "pdg-2023-v0.0.5.sqlite")
-download(db_url, joinpath(tmp_dir, "pdg-2023-v0.0.5.sqlite"))
+Downloads.download(db_url, joinpath(tmp_dir, "pdg-2023-v0.0.5.sqlite"))
 
 @testset "PDGdb Tests" begin
 
@@ -34,6 +35,12 @@ download(db_url, joinpath(tmp_dir, "pdg-2023-v0.0.5.sqlite"))
         measurement = PDGdb.pick(mass(particle_props), :value_type => "AC")
         @test isa(measurement, Measurement)
         # Additional tests can be added based on the expected measurement for "muon" mass
+    end
+
+    @testset "only generic" begin
+        @test sum(PDGdb.unique_particles.pdgid .== "M210") != 0 # Zc(3900)
+        @test sum(PDGdb.unique_particles.pdgid .== "B175") != 0 # Omega_c(3065)
+        @test sum(PDGdb.unique_particles.pdgid .== "M181") != 0 # psi(4360)
     end
 
 end

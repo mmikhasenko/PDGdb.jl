@@ -11,12 +11,14 @@ SQLite = "0aa819cd-b072-5ff4-a722-6bc24af294d9"
 
 [compat]
 DataFrames = "1.6.0"
-Measurements = "2.10.0"
+Downloads = "1.6.0"
 SQLite = "1.6.0"
+Measurements = "2.10.0"
 julia = "1.9.3"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
 [targets]
-test = ["Test"]
+test = ["Test", "Downloads"]

@@ -30,6 +30,19 @@ function determine_dims(db::SQLite.DB, table_name)
     (; num_rows, num_cols)
 end
 
+function filter_particle_table(ptable)
+    # entry_type !∈ ["W", "A", "S"] # was, as known as, out-of-date
+    Pparticles = subset(ptable, :entry_type => (x -> x .== "P"))
+    # 
+    Gparticles = subset(Pparticles, :charge_type => (x -> x .== "G"))
+    notGparticles = subset(Pparticles, :charge_type => (x -> x .!== "G"))
+    missing_pdgid = setdiff(Gparticles.pdgid, notGparticles.pdgid)
+    missingGparticles = subset(Gparticles, :pdgid => ByRow(x -> x ∈ missing_pdgid))
+    # 
+    return vcat(notGparticles, missingGparticles)
+end
+
+
 function connect(path2)
     db = SQLite.DB(path2)
     # 
@@ -39,7 +52,7 @@ function connect(path2)
         df_dims = determine_dims.(db |> Ref, tables_df.name)
         select(hcat(tables_df, df_dims), :name, :x1 => AsTable)
     end
-    print(tables_df)
+    println(tables_df)
 
     # general info about DB. Printed as output
     global pdginfo = read2memory(db, "pdginfo")
@@ -58,13 +71,7 @@ function connect(path2)
             Dict(dgb.value .=> dgb.description)
         for dgb in groupby(pdgdoc, [:table_name, :column_name])]
     # 
-    global unique_particles = pdgparticle[
-        # entry_type != "W" # was
-        # entry_type != "A" # as known as
-        # entry_type != "S" # out-of-date
-        #  ==> entry_type == "P"
-        (pdgparticle.entry_type.=="P").&&(pdgparticle.charge_type.!="G"),
-        :]
+    global unique_particles = filter_particle_table(pdgparticle)
     global all_particles_names = unique_particles.name
     # 
     return pdginfo

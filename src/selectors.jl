@@ -1,7 +1,7 @@
 
 function decays(df_properties::DataFrame)
     df = df_properties[df_properties.data_type.|>!ismissing, :]
-    selection_list = map(df_properties.pdgid) do p
+    selection_list = map(df.pdgid) do p
         !contains(p[2:end], r"M|W|PP|T")
     end
     df = df[selection_list, :]

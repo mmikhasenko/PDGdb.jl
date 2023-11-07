@@ -1,13 +1,25 @@
+function split_and_keep(input_string, regex)
+    tokens = []
+    last_idx = 1
+    for match in eachmatch(regex, input_string)
+        push!(tokens, input_string[last_idx:match.offset-1])
+        push!(tokens, match.match)
+        last_idx = match.offset + length(match) + 1
+    end
+    push!(tokens, input_string[last_idx:end])
+    return tokens
+end
+
 function tokenize(s::String)::Vector{String}
     # Split the string at non-alphanumeric characters
-    tokens = split(s, r"[^a-zA-Z0-9]+")
+    tokens = split_and_keep(s, r"[^A-Za-z0-9+/\-_]")
     # Filter out empty tokens
     return filter(!isempty, tokens)
 end
 
 function jaccard_similarity(A::Vector{String}, B::Vector{String})::Float64
-    union_size = length(union(A, B))
-    intersection_size = length(intersect(A, B))
+    union_size = length(join(union(A, B)))
+    intersection_size = length(join(intersect(A, B)))
 
     # Handle case where both sets are empty
     if union_size == 0
